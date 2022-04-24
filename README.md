@@ -1,5 +1,5 @@
 ﻿# Chocolatey Gleam
-![Chocolatey Version](https://img.shields.io/chocolatey/v/gleam)
+![Chocolatey Version](https://img.shields.io/chocolatey/v/gleam)</br>
 Allows windows users to install the Gleam programing language through Chocolatey
 
 ## ⚠️ Note
