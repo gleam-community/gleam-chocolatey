@@ -13,7 +13,7 @@
     <title>Gleam Language</title>
     <authors>lpil</authors>
     <projectUrl>https://gleam.run</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/harryet/gleam-chocolatey/main/choco-icon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/HarryET/gleam-chocolatey/main/choco-icon.png</iconUrl>
     <licenseUrl>https://github.com/gleam-lang/gleam/blob/main/LICENCE</licenseUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/gleam-lang/gleam</projectSourceUrl>
