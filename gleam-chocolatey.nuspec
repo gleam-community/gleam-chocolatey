@@ -11,7 +11,7 @@
 
     <!-- == SOFTWARE SPECIFIC SECTION == -->
     <title>Gleam Language</title>
-    <authors>HarryET, lpil</authors>
+    <authors>lpil</authors>
     <projectUrl>https://gleam.run</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/harryet/gleam-chocolatey/main/choco-icon.png</iconUrl>
     <licenseUrl>https://github.com/gleam-lang/gleam/blob/main/LICENCE</licenseUrl>
