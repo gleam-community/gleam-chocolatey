@@ -4,7 +4,7 @@
   <metadata>
     <!-- == PACKAGE SPECIFIC SECTION == -->
     <id>gleam</id>
-    <version>0.22.0</version>
+    <version>0.22.1</version>
     <packageSourceUrl>https://github.com/HarryET/gleam-chocolatey</packageSourceUrl>
     <owners>HarryET</owners>
     <!-- ============================== -->
