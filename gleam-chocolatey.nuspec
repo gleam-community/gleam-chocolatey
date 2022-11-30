@@ -4,7 +4,7 @@
   <metadata>
     <!-- == PACKAGE SPECIFIC SECTION == -->
     <id>gleam</id>
-    <version>0.24.0</version>
+    <version>0.25.0</version>
     <packageSourceUrl>https://github.com/HarryET/gleam-chocolatey</packageSourceUrl>
     <owners>HarryET</owners>
     <!-- ============================== -->
@@ -28,7 +28,7 @@ with other BEAM languages such as Erlang, Elixir, and LFE.
 
 For more information see the Gleam website: [https://gleam.run](https://gleam.run).
     </description>
-    <releaseNotes>https://gleam.run/news/gleam-v0.24-released/</releaseNotes>
+    <releaseNotes>https://gleam.run/news/v0.25-introducing-use-expressions/</releaseNotes>
     <!-- =============================== -->
 
     <dependencies>
