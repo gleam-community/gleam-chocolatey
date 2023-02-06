@@ -33,7 +33,7 @@ jobs:
           length_from_start: 1
       - uses: bhowell2/github-substring-action@v1.0.0
         name: Strip Chocolatey 'v' version prefix
-        id: strip-gleam
+        id: strip-choco
         with:
           value: ${{ steps.chocolatey.outputs.release }}
           length_from_start: 1
