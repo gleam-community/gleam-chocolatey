@@ -53,7 +53,8 @@ jobs:
 
   update:
     name: Update Gleam Chocolatey
-    needs: check-versions
+    needs:
+      - check-versions
     if: needs.check-versions.outputs.should-run
     runs-on: ubuntu-latest
     steps:
@@ -70,6 +71,10 @@ jobs:
           delete-input-file: false
           html-escape: false
           dry-run: true
+        env:
+          VERSION: ${{ needs.check-versions.outputs.gleam-version }}
+          RELEASE_NOTES: "todo - fetch from github"
+          SHA512: "todo - fetch from github"
       # # Create release
       # - id: release
       #   name: Create Github Release
