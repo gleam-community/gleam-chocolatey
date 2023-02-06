@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <!-- == PACKAGE SPECIFIC SECTION == -->
+    <id>gleam</id>
+    <version>{{ env.VERSION }}</version>
+    <packageSourceUrl>https://github.com/HarryET/gleam-chocolatey</packageSourceUrl>
+    <owners>HarryET</owners>
+    <!-- ============================== -->
+
+    <!-- == SOFTWARE SPECIFIC SECTION == -->
+    <title>Gleam Language</title>
+    <authors>The Gleam contributors</authors>
+    <projectUrl>https://gleam.run</projectUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/HarryET/gleam-chocolatey/choco-icon.png</iconUrl>
+    <licenseUrl>https://github.com/gleam-lang/gleam/blob/main/LICENCE</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/gleam-lang/gleam</projectSourceUrl>
+    <docsUrl>https://gleam.run/documentation/</docsUrl>
+    <tags>gleam erlang javascript</tags>
+    <summary>A friendly language for building type-safe, scalable systems!</summary>
+    <description>
+Gleam is a friendly language for building type-safe, scalable systems!
+
+It compiles to [Erlang](http://www.erlang.org/) (or JavaScript) and has straightforward interop
+with other BEAM languages such as Erlang, Elixir, and LFE.
+
+For more information see the Gleam website: [https://gleam.run](https://gleam.run).
+    </description>
+    <releaseNotes>{{ env.RELEASE_NOTES }}</releaseNotes>
+    <!-- =============================== -->
+
+    <dependencies>
+      <dependency id="erlang" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
