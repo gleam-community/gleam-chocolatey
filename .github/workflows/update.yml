@@ -62,8 +62,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # - id: fetch-release-sha
-      #   name: Fetch release SHA
+      - id: fetch-release-sha
+        name: Fetch release SHA
+        run: |
+          curl -o ./release.zip.sha512 https://github.com/gleam-lang/gleam/releases/download/${{ needs.check-versions.outputs.gleam-version }}/gleam-${{ needs.check-versions.outputs.gleam-version }}-x86_64-pc-windows-msvc.zip.sha512
+          echo "sha=$(cat ./release.zip.sha512)" >> $GITHUB_OUTPUT
       - id: clean-last-version
         run: |
           rm ./gleam-chocolatey.nuspec
@@ -79,7 +82,7 @@ jobs:
           dry-run: false
         env:
           VERSION: ${{ needs.check-versions.outputs.gleam-version }}
-          SHA512: "todo - fetch from github"
+          SHA512: ${{ steps.fetch-release-sha.outputs.sha }}
           RELEASE_NOTES: "todo - fetch from github"
       - id: print-files
         run: |
