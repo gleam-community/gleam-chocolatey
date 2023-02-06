@@ -53,7 +53,7 @@ jobs:
           echo "Comparison: ${{ steps.compare-version.outputs.comparison-result }}"
           echo "Will Update: ${{ steps.compare-version.outputs.comparison-result == '<' }}"
 
-  update:
+  update-files:
     name: Update Gleam Chocolatey
     needs:
       - check-versions
@@ -61,7 +61,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+      - name: Update repository
+        uses: stefanzweifel/git-auto-commit-action
+        with:
+          file_pattern: '*.nuspec tools/*.ps1'
       - id: fetch-release-sha
         name: Fetch release SHA
         run: |
@@ -84,18 +88,35 @@ jobs:
         env:
           VERSION: ${{ needs.check-versions.outputs.gleam-version }}
           SHA512: ${{ steps.fetch-release-sha.outputs.sha }}
-      - id: print-files
+
+  publish:
+    name: Publish new Version
+    needs:
+      - update-files
+      - check-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Package
+        uses: crazy-max/ghaction-chocolatey@v2
+        with:
+          args: pack ./gleam-chocolatey.nuspec
+          image: chocolatey/choco
+      - name: test
         run: |
-          cat ./gleam-chocolatey.nuspec
-      - id: print-files-2
-        run: |
-          cat ./tools/chocolateyinstall.ps1
-      # # Create release
-      # - id: release
-      #   name: Create Github Release
-      # # Tidy repo to publish
-      # - id: clear-repo
-      #   name: Tidy Repo
+          ls
+      # - name: Create Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     body: Automatic Release from Github Actions for Gleam Release ${{ needs.check-versions.outputs.gleam-version }}
+      #     tag_name: ${{ needs.check-versions.outputs.gleam-version }}
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     files:
+      # - id: choco-login
+      #   name: Login to Chocolatey
+      #   run: |
+      #     choco apikey --key ${{ secrets.CHOCO_KEY }} --source https://push.chocolatey.org/
       # # Choco publish
       # - id: publish
       #   name: Publish to Chocolatey
