@@ -84,7 +84,6 @@ jobs:
         env:
           VERSION: ${{ needs.check-versions.outputs.gleam-version }}
           SHA512: ${{ steps.fetch-release-sha.outputs.sha }}
-          RELEASE_NOTES: "todo - fetch from github"
       - id: print-files
         run: |
           cat ./gleam-chocolatey.nuspec
