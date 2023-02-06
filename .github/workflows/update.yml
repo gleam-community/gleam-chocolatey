@@ -65,7 +65,7 @@ jobs:
       - id: fetch-release-sha
         name: Fetch release SHA
         run: |
-          curl --location --remote-name -o ./release.zip.sha512 https://github.com/gleam-lang/gleam/releases/download/${{ needs.check-versions.outputs.gleam-version }}/gleam-${{ needs.check-versions.outputs.gleam-version }}-x86_64-pc-windows-msvc.zip.sha512
+          curl --location --remote-name https://github.com/gleam-lang/gleam/releases/download/${{ needs.check-versions.outputs.gleam-version }}/gleam-${{ needs.check-versions.outputs.gleam-version }}-x86_64-pc-windows-msvc.zip.sha512 -o ./release.zip.sha512
 
           echo "sha=$(cat ./release.zip.sha512)" >> $GITHUB_OUTPUT
       - id: clean-last-version
