@@ -66,7 +66,8 @@ jobs:
         name: Fetch release SHA
         run: |
           curl -o ./release.zip.sha512 -LJO https://github.com/gleam-lang/gleam/releases/download/${{ needs.check-versions.outputs.gleam-version }}/gleam-${{ needs.check-versions.outputs.gleam-version }}-x86_64-pc-windows-msvc.zip.sha512
-          echo "sha=$(cat ./release.zip.sha512)" >> $GITHUB_OUTPUT
+          export SHA_FILE=$(cat ./release.zip.sha512)
+          echo "sha=${SHA_FILE:128}" >> $GITHUB_OUTPUT
       - id: clean-last-version
         run: |
           rm ./gleam-chocolatey.nuspec
