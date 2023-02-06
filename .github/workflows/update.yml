@@ -64,29 +64,22 @@ jobs:
         uses: actions/checkout@v2
       # - id: fetch-release-sha
       #   name: Fetch release SHA
-      - id: render-ps1-templates
+      - id: clean-last-version
+        run: |
+          rm ./gleam-chocolatey.nuspec
+          rm ./tools/chocolateyinstall.ps1
+      - id: render-templates
         name: Render templates
         uses: pedrolamas/handlebars-action@v2.1.0
         with:
-          files: '**/*.ps1.handlebars'
-          output-filename: '{{ file.dir }}/{{ file.name }}.ps1'
+          files: '**/*.handlebars'
+          output-filename: '{{ file.dir }}/{{ file.name }}'
           delete-input-file: false
           html-escape: false
           dry-run: false
         env:
           VERSION: ${{ needs.check-versions.outputs.gleam-version }}
           SHA512: "todo - fetch from github"
-      - id: render-spec-templates
-        name: Render templates
-        uses: pedrolamas/handlebars-action@v2.1.0
-        with:
-          files: '**/*.nuspec.handlebars'
-          output-filename: '{{ file.dir }}/{{ file.name }}.nuspec'
-          delete-input-file: false
-          html-escape: false
-          dry-run: false
-        env:
-          VERSION: ${{ needs.check-versions.outputs.gleam-version }}
           RELEASE_NOTES: "todo - fetch from github"
       - id: print-files
         run: |
