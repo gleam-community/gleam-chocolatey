@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       should-run: ${{ steps.compare-version.outputs.satisfies == '<' }}
+      gleam-version: ${{ steps.gleam.outputs.release }}
     steps:
       - id: gleam
         name: Get latest Gleam release
@@ -53,7 +54,7 @@ jobs:
   update:
     name: Update Gleam Chocolatey
     needs: check-versions
-    if: needs.check-versions.outputs.should-run == 'true'
+    if: needs.check-versions.outputs.should-run
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
