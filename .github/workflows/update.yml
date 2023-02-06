@@ -13,7 +13,7 @@ jobs:
     name: Check Versions
     runs-on: ubuntu-latest
     outputs:
-      should-run: ${{ steps.compare-version.outputs.satisfies }} == '<'
+      should-run: ${{ steps.compare-version.outputs.satisfies == '<' }}
     steps:
       - id: gleam
         name: Get latest Gleam release
