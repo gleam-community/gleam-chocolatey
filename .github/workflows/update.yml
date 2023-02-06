@@ -63,7 +63,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Update repository
-        uses: stefanzweifel/git-auto-commit-action
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           file_pattern: '*.nuspec tools/*.ps1'
       - id: fetch-release-sha
