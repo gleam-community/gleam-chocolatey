@@ -42,6 +42,25 @@ jobs:
         with:
           version: ${{ steps.strip-choco.outputs.result }}
           compare-to: ${{ steps.strip-gleam.outputs.result }}
+      - id: test
+        run: |
+          echo "${{ steps.compare-version.outputs.release }}"
+          echo "${{ steps.compare-version.outputs.major }}"
+          echo "${{ steps.compare-version.outputs.minor }}"
+          echo "${{ steps.compare-version.outputs.patch }}"
+          echo "${{ steps.compare-version.outputs.build }}"
+          echo "${{ steps.compare-version.outputs.build-parts }}"
+          echo "${{ steps.compare-version.outputs.build-0 }}"
+          echo "${{ steps.compare-version.outputs.build-1 }}"
+          echo "${{ steps.compare-version.outputs.comparison-result }}"
+          echo "${{ steps.compare-version.outputs.satisfies }}"
+          echo "${{ steps.compare-version.outputs.inc-major }}"
+          echo "${{ steps.compare-version.outputs.inc-premajor }}"
+          echo "${{ steps.compare-version.outputs.inc-minor }}"
+          echo "${{ steps.compare-version.outputs.inc-preminor }}"
+          echo "${{ steps.compare-version.outputs.inc-patch }}"
+          echo "${{ steps.compare-version.outputs.inc-prepatch }}"
+          echo "${{ steps.compare-version.outputs.inc-prerelease }}"
       - id: print-comparison
         name: Print Comparison
         run: |
