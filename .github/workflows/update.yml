@@ -21,19 +21,19 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            return github.rest.repos.getLatestRelease({
+            return (github.rest.repos.getLatestRelease({
               owner: "gleam-lang",
               repo: "gleam",
-            });
+            })).data;
       - id: chocolatey-release
         name: Get latest Gleam Chocolatey release
         uses: actions/github-script@v6
         with:
           script: |
-            return github.rest.repos.getLatestRelease({
+            return (github.rest.repos.getLatestRelease({
               owner: "harryet",
               repo: "gleam-chocolatey",
-            });
+            })).data;
       - uses: web3j/substr-action@v1.2
         name: Strip Gleam 'v' version prefix
         id: strip-gleam
