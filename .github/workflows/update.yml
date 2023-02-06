@@ -40,13 +40,13 @@ jobs:
       - id: compare-version
         uses: madhead/semver-utils@latest
         with:
-          version: ${{ steps.strip-choco.outputs.substring }}
-          compare-to: ${{ steps.strip-gleam.outputs.substring }}
+          version: ${{ steps.strip-choco.outputs.result }}
+          compare-to: ${{ steps.strip-gleam.outputs.result }}
       - id: print-comparison
         name: Print Comparison
         run: |
-          echo "Gleam Version: ${{ steps.strip-gleam.outputs.substring }}"
-          echo "Choco Version: ${{ steps.strip-choco.outputs.substring }}"
+          echo "Gleam Version: ${{ steps.strip-gleam.outputs.result }}"
+          echo "Choco Version: ${{ steps.strip-choco.outputs.result }}"
           echo "Comparison: ${{ steps.version.outputs.comparison-result }}"
           echo "Will Update: ${{ steps.compare-version.outputs.satisfies == '>' }}"
 
