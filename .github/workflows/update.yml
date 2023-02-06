@@ -25,18 +25,18 @@ jobs:
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           repository: harryet/gleam-chocolatey
-      - uses: bhowell2/github-substring-action@v1.0.0
+      - uses: web3j/substr-action@v1.2
         name: Strip Gleam 'v' version prefix
         id: strip-gleam
         with:
           value: ${{ steps.gleam.outputs.release }}
-          length_from_start: 2
-      - uses: bhowell2/github-substring-action@v1.0.0
+          start: '2'
+      - uses: web3j/substr-action@v1.2
         name: Strip Chocolatey 'v' version prefix
         id: strip-choco
         with:
           value: ${{ steps.chocolatey.outputs.release }}
-          length_from_start: 2
+          start: '2'
       - id: compare-version
         uses: madhead/semver-utils@latest
         with:
