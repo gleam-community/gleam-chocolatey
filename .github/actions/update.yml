@@ -1,0 +1,44 @@
+# Runs on a schedule to check if the latest Gleam release is newer than the
+# latest Chocolatey release. If it is, it will run the update script to update
+# the Chocolatey package.
+
+name: Automatic Release
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  check-versions:
+    name: Check Versions
+    runs-on: ubuntu-latest
+    outputs:
+      should-run: ${{ steps.compare-version.outputs.satisfies }} == '>'
+    steps:
+      - id: gleam
+        name: Get latest Gleam release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          repository: gleam-lang/gleam
+      - id: chocolatey
+        name: Get latest Gleam Chocolatey release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          repository: harryet/gleam-chocolatey
+      - id: compare-version
+        uses: madhead/semver-utils@latest
+        with:
+          version: ${{ steps.chocolatey.outputs.release }}
+          compare-to: ${{ steps.gleam.outputs.release }}
+
+  update:
+    name: Update Gleam Chocolatey
+    needs: check-versions
+    if: needs.check-versions.outputs.should-run == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Update
+        run: |
+          echo "TODO: Run update here!"
