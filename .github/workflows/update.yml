@@ -30,13 +30,13 @@ jobs:
         id: strip-gleam
         with:
           value: ${{ steps.gleam.outputs.release }}
-          length_from_start: 1
+          length_from_start: 2
       - uses: bhowell2/github-substring-action@v1.0.0
         name: Strip Chocolatey 'v' version prefix
         id: strip-choco
         with:
           value: ${{ steps.chocolatey.outputs.release }}
-          length_from_start: 1
+          length_from_start: 2
       - id: compare-version
         uses: madhead/semver-utils@latest
         with:
