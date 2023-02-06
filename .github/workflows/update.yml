@@ -25,16 +25,28 @@ jobs:
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           repository: harryet/gleam-chocolatey
+      - uses: bhowell2/github-substring-action@v1.0.0
+        name: Strip Gleam 'v' version prefix
+        id: strip-gleam
+        with:
+          value: ${{ steps.gleam.outputs.release }}
+          length_from_start: 1
+      - uses: bhowell2/github-substring-action@v1.0.0
+        name: Strip Chocolatey 'v' version prefix
+        id: strip-gleam
+        with:
+          value: ${{ steps.chocolatey.outputs.release }}
+          length_from_start: 1
       - id: compare-version
         uses: madhead/semver-utils@latest
         with:
-          version: ${{ steps.chocolatey.outputs.release }}
-          compare-to: ${{ steps.gleam.outputs.release }}
+          version: ${{ steps.strip-choco.outputs.substring }}
+          compare-to: ${{ steps.strip-gleam.outputs.substring }}
       - id: print-comparison
         name: Print Comparison
         run: |
-          echo "Gleam Version: ${{ steps.gleam.outputs.release }}"
-          echo "Choco Version: ${{ steps.chocolatey.outputs.release }}"
+          echo "Gleam Version: ${{ steps.strip-gleam.outputs.substring }}"
+          echo "Choco Version: ${{ steps.strip-choco.outputs.substring }}"
           echo "Comparison: ${{ steps.version.outputs.comparison-result }}"
           echo "Will Update: ${{ steps.compare-version.outputs.satisfies == '>' }}"
 
