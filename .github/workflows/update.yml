@@ -30,13 +30,13 @@ jobs:
         id: strip-gleam
         with:
           value: ${{ steps.gleam.outputs.release }}
-          start: '2'
+          start: '1'
       - uses: web3j/substr-action@v1.2
         name: Strip Chocolatey 'v' version prefix
         id: strip-choco
         with:
           value: ${{ steps.chocolatey.outputs.release }}
-          start: '2'
+          start: '1'
       - id: compare-version
         uses: madhead/semver-utils@latest
         with:
