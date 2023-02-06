@@ -93,7 +93,7 @@ jobs:
     name: Publish new Version
     needs:
       - update-files
-      - check-version
+      - check-versions
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
