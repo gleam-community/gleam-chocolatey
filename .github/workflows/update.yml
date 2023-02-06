@@ -64,7 +64,7 @@ jobs:
       #   name: Fetch release SHA
       - id: render-templates
         name: Render templates
-        uses: pedrolamas/handlebars-action@latest
+        uses: pedrolamas/handlebars-action@v2.1.0
         with:
           files: '**/*.handlebars'
           output-filename: '{{ file.dir }}/{{ file.name }}'
