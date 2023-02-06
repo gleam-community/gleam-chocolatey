@@ -21,7 +21,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            return octokit.rest.repos.getLatestRelease({
+            return github.rest.repos.getLatestRelease({
               owner: "gleam-lang",
               repo: "gleam",
             });
@@ -30,7 +30,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            return octokit.rest.repos.getLatestRelease({
+            return github.rest.repos.getLatestRelease({
               owner: "harryet",
               repo: "gleam-chocolatey",
             });
