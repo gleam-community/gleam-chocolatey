@@ -69,14 +69,20 @@ jobs:
         uses: pedrolamas/handlebars-action@v2.1.0
         with:
           files: '**/*.handlebars'
-          output-filename: '{{ file.dir }}/{{ file.name }}'
+          output-filename: '{{ file.dir }}/{{ file.base }}'
           delete-input-file: false
           html-escape: false
-          dry-run: true
+          dry-run: false
         env:
           VERSION: ${{ needs.check-versions.outputs.gleam-version }}
           RELEASE_NOTES: "todo - fetch from github"
           SHA512: "todo - fetch from github"
+      - id: print-files
+        run: |
+          cat ./gleam-chocolatey.nuspec
+      - id: print-files-2
+        run: |
+          cat ./tools/chocolateyinstall.ps1
       # # Create release
       # - id: release
       #   name: Create Github Release
