@@ -14,31 +14,37 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       should-run: ${{ steps.compare-version.outputs.satisfies == '<' }}
-      gleam-version: ${{ steps.gleam.outputs.release }}
+      gleam-release: ${{ steps.gleam.outputs.release }}
     steps:
-      - id: gleam
+      - id: gleam-release
         name: Get latest Gleam release
-        uses: shawaj/github-action-get-latest-release@patch-1
+        uses: actions/github-script@v6
         with:
-          repository: gleam-lang/gleam
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - id: chocolatey
+          script: |
+            return octokit.rest.repos.getLatestRelease({
+              owner: "gleam-lang",
+              repo: "gleam",
+            });
+      - id: chocolatey-release
         name: Get latest Gleam Chocolatey release
-        uses: shawaj/github-action-get-latest-release@patch-1
+        uses: actions/github-script@v6
         with:
-          repository: harryet/gleam-chocolatey
-          token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            return octokit.rest.repos.getLatestRelease({
+              owner: "harryet",
+              repo: "gleam-chocolatey",
+            });
       - uses: web3j/substr-action@v1.2
         name: Strip Gleam 'v' version prefix
         id: strip-gleam
         with:
-          value: ${{ steps.gleam.outputs.release }}
+          value: ${{ steps.gleam-release.outputs.release.name }}
           start: '1'
       - uses: web3j/substr-action@v1.2
         name: Strip Chocolatey 'v' version prefix
         id: strip-choco
         with:
-          value: ${{ steps.chocolatey.outputs.release }}
+          value: ${{ steps.chocolatey-release.outputs.release.name }}
           start: '1'
       - id: compare-version
         uses: madhead/semver-utils@latest
@@ -82,9 +88,9 @@ jobs:
           html-escape: false
           dry-run: false
         env:
-          VERSION: ${{ needs.check-versions.outputs.gleam-version }}
+          VERSION: ${{ needs.check-versions.outputs.gleam-release.name }}
           SHA512: ${{ steps.fetch-release-sha.outputs.sha }}
-          RELEASE_NOTES: "todo - fetch from github"
+          RELEASE_NOTES: ${{ needs.check-versions.outputs.gleam-release.body }}
       - id: print-files
         run: |
           cat ./gleam-chocolatey.nuspec
