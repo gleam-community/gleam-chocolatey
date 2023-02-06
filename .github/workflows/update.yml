@@ -36,7 +36,7 @@ jobs:
           echo "Gleam Version: ${{ steps.gleam.outputs.release }}"
           echo "Choco Version: ${{ steps.chocolatey.outputs.release }}"
           echo "Comparison: ${{ steps.version.outputs.comparison-result }}"
-          echo "Will Update: ${{ ${{ steps.compare-version.outputs.satisfies }} == '>' }}"
+          echo "Will Update: ${{ steps.compare-version.outputs.satisfies == '>' }}"
 
   update:
     name: Update Gleam Chocolatey
