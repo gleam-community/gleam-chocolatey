@@ -18,14 +18,16 @@ jobs:
     steps:
       - id: gleam
         name: Get latest Gleam release
-        uses: pozetroninc/github-action-get-latest-release@master
+        uses: shawaj/github-action-get-latest-release@patch-1
         with:
           repository: gleam-lang/gleam
+          token: ${{ secrets.GITHUB_TOKEN }}
       - id: chocolatey
         name: Get latest Gleam Chocolatey release
-        uses: pozetroninc/github-action-get-latest-release@master
+        uses: shawaj/github-action-get-latest-release@patch-1
         with:
           repository: harryet/gleam-chocolatey
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: web3j/substr-action@v1.2
         name: Strip Gleam 'v' version prefix
         id: strip-gleam
