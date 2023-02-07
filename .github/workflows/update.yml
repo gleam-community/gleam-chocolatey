@@ -95,14 +95,13 @@ jobs:
     needs:
       - update-files
       - check-versions
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Package
-        uses: crazy-max/ghaction-chocolatey@v2
-        with:
-          args: pack
+        run: |
+          choco pack
       - name: test
         run: |
           ls
