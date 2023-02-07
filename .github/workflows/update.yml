@@ -102,7 +102,7 @@ jobs:
       - name: Package
         uses: crazy-max/ghaction-chocolatey@v2
         with:
-          args: pack
+          args: choco pack
           image: chocolatey/choco
       - name: test
         run: |
