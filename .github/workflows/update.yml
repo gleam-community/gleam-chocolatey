@@ -99,12 +99,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Move to HEAD
+        run: |
+          git reset --hard HEAD
       - name: Package
         run: |
           choco pack
       - name: test
         run: |
-          ls
+          dir
       # - name: Create Release
       #   uses: softprops/action-gh-release@v1
       #   with:
