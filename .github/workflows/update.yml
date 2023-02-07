@@ -88,6 +88,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           file_pattern: '*.nuspec tools/*.ps1'
+          commit_message: "feat(auto): Release ${{ needs.check-versions.outputs.gleam-version }}"
 
   publish:
     name: Publish new Version
