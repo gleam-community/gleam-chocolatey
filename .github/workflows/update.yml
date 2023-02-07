@@ -107,20 +107,18 @@ jobs:
       - name: Package
         run: |
           choco pack
-      - name: test
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: Automatic Release from Github Actions for Gleam Release ${{ needs.check-versions.outputs.gleam-version }}
+          tag_name: v${{ needs.check-versions.outputs.gleam-version }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: gleam.${{ needs.check-versions.outputs.gleam-version }}.nupkg
+      - id: choco-login
+        name: Login to Chocolatey
         run: |
-          dir
-      # - name: Create Release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     body: Automatic Release from Github Actions for Gleam Release ${{ needs.check-versions.outputs.gleam-version }}
-      #     tag_name: ${{ needs.check-versions.outputs.gleam-version }}
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     files:
-      # - id: choco-login
-      #   name: Login to Chocolatey
-      #   run: |
-      #     choco apikey --key ${{ secrets.CHOCO_KEY }} --source https://push.chocolatey.org/
-      # # Choco publish
-      # - id: publish
-      #   name: Publish to Chocolatey
+          choco apikey --key ${{ secrets.CHOCO_KEY }} --source https://push.chocolatey.org/
+      - id: publish
+        name: Publish to Chocolatey
+        run: |
+          choco push --yes
