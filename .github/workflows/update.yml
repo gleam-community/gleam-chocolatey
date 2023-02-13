@@ -82,7 +82,7 @@ jobs:
           html-escape: false
           dry-run: false
         env:
-          VERSION: ${{ needs.check-versions.outputs.gleam-version }}
+          VERSION: v${{ needs.check-versions.outputs.gleam-version }}
           SHA512: ${{ steps.fetch-release-sha.outputs.sha }}
       - name: Update repository
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
