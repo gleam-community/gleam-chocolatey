@@ -6,7 +6,7 @@
     <id>gleam</id>
     <version>0.27.0</version>
     <packageSourceUrl>https://github.com/gleam-community/gleam-chocolatey</packageSourceUrl>
-    <owners>HarryET</owners>
+    <owners>HarryET aslilac</owners>
     <!-- ============================== -->
 
     <!-- == SOFTWARE SPECIFIC SECTION == -->
