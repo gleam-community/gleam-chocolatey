@@ -7,116 +7,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-versions:
-    name: Check Versions
-    runs-on: ubuntu-latest
-    outputs:
-      should-run: ${{ steps.compare-version.outputs.satisfies == '<' }}
-      gleam-version: ${{ steps.strip-gleam.outputs.result }}
-    steps:
-      - id: gleam
-        name: Get latest Gleam release
-        uses: shawaj/github-action-get-latest-release@patch-1
-        with:
-          repository: gleam-lang/gleam
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - id: chocolatey
-        name: Get latest Gleam Chocolatey release
-        uses: shawaj/github-action-get-latest-release@patch-1
-        with:
-          repository: harryet/gleam-chocolatey
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: web3j/substr-action@v1.2
-        name: Strip Gleam 'v' version prefix
-        id: strip-gleam
-        with:
-          value: ${{ steps.gleam.outputs.release }}
-          start: '1'
-      - uses: web3j/substr-action@v1.2
-        name: Strip Chocolatey 'v' version prefix
-        id: strip-choco
-        with:
-          value: ${{ steps.chocolatey.outputs.release }}
-          start: '1'
-      - id: compare-version
-        uses: madhead/semver-utils@latest
-        with:
-          version: ${{ steps.strip-choco.outputs.result }}
-          compare-to: ${{ steps.strip-gleam.outputs.result }}
-      - id: print-comparison
-        name: Print Comparison
-        run: |
-          echo "Gleam Version: ${{ steps.strip-gleam.outputs.result }}"
-          echo "Choco Version: ${{ steps.strip-choco.outputs.result }}"
-          echo "Comparison: ${{ steps.compare-version.outputs.comparison-result }}"
-          echo "Will Update: ${{ steps.compare-version.outputs.comparison-result == '<' }}"
-
-  update-files:
-    name: Update Gleam Chocolatey
-    needs:
-      - check-versions
-    if: needs.check-versions.outputs.should-run == true
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - id: fetch-release-sha
-        name: Fetch release SHA
-        run: |
-          curl -o ./release.zip.sha512 -LJO https://github.com/gleam-lang/gleam/releases/download/${{ needs.check-versions.outputs.gleam-version }}/gleam-${{ needs.check-versions.outputs.gleam-version }}-x86_64-pc-windows-msvc.zip.sha512
-          export SHA_FILE=$(cat ./release.zip.sha512)
-          echo "sha=${SHA_FILE:0:128}" >> $GITHUB_OUTPUT
-      - id: clean-last-version
-        run: |
-          rm ./gleam-chocolatey.nuspec
-          rm ./tools/chocolateyinstall.ps1
-      - id: render-templates
-        name: Render templates
-        uses: pedrolamas/handlebars-action@v2.1.0
-        with:
-          files: '**/*.handlebars'
-          output-filename: '{{ file.dir }}/{{ file.name }}'
-          delete-input-file: false
-          html-escape: false
-          dry-run: false
-        env:
-          VERSION: v${{ needs.check-versions.outputs.gleam-version }}
-          SHA512: ${{ steps.fetch-release-sha.outputs.sha }}
-      - name: Update repository
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
-        with:
-          file_pattern: '*.nuspec tools/*.ps1'
-          commit_message: "feat(auto): Release ${{ needs.check-versions.outputs.gleam-version }}"
-
   publish:
     name: Publish new Version
-    needs:
-      - update-files
-      - check-versions
+    # needs:
+    #   - update-files
+    #   - check-versions
     runs-on: windows-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Move to HEAD
-        run: |
-          git reset --hard HEAD
+
       - name: Package
-        run: |
-          choco pack
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          body: Automatic Release from Github Actions for Gleam Release ${{ needs.check-versions.outputs.gleam-version }}
-          tag_name: v${{ needs.check-versions.outputs.gleam-version }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          files: gleam.${{ needs.check-versions.outputs.gleam-version }}.nupkg
-      - id: choco-login
+        run: choco pack
+
+      # - name: Create Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     body: Automatic Release from Github Actions for Gleam Release ${{ needs.check-versions.outputs.gleam-version }}
+      #     tag_name: v${{ needs.check-versions.outputs.gleam-version }}
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     files: gleam.${{ needs.check-versions.outputs.gleam-version }}.nupkg
+
+      - run: choco apikey --key ${{ secrets.CHOCO_KEY }} --source https://push.chocolatey.org/
         name: Login to Chocolatey
-        run: |
-          choco apikey --key ${{ secrets.CHOCO_KEY }} --source https://push.chocolatey.org/
-      - id: publish
+
+      - run: choco push --yes
         name: Publish to Chocolatey
-        run: |
-          choco push --yes
