@@ -4,29 +4,25 @@
   <metadata>
     <!-- == PACKAGE SPECIFIC SECTION == -->
     <id>gleam</id>
-    <version>0.26.2</version>
-    <packageSourceUrl>https://github.com/HarryET/gleam-chocolatey</packageSourceUrl>
+    <version>0.27.0</version>
+    <packageSourceUrl>https://github.com/gleam-community/gleam-chocolatey</packageSourceUrl>
     <owners>HarryET</owners>
     <!-- ============================== -->
 
     <!-- == SOFTWARE SPECIFIC SECTION == -->
     <title>Gleam Language</title>
-    <authors>The Gleam contributors</authors>
+    <authors>https://github.com/gleam-lang/gleam/contributors</authors>
     <projectUrl>https://gleam.run</projectUrl>
-    <iconUrl>https://cdn.jsdelivr.net/gh/HarryET/gleam-chocolatey/choco-icon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/gleam-community/gleam-chocolatey/main/choco-icon.png</iconUrl>
     <licenseUrl>https://github.com/gleam-lang/gleam/blob/main/LICENCE</licenseUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/gleam-lang/gleam</projectSourceUrl>
     <docsUrl>https://gleam.run/documentation/</docsUrl>
     <tags>gleam erlang javascript</tags>
-    <summary>A friendly language for building type-safe, scalable systems!</summary>
+    <summary>A friendly language for building type-safe systems that scale</summary>
     <description>
-Gleam is a friendly language for building type-safe, scalable systems!
-
-It compiles to [Erlang](http://www.erlang.org/) (or JavaScript) and has straightforward interop
-with other BEAM languages such as Erlang, Elixir, and LFE.
-
-For more information see the Gleam website: [https://gleam.run](https://gleam.run).
+The power of a type system, the expressiveness of functional programming, and the reliability
+of the highly concurrent, fault tolerant Erlang runtime, with a familiar and modern syntax.
     </description>
     <!-- =============================== -->
 
