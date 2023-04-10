@@ -4,33 +4,29 @@
 
 name: Automatic Release
 on:
-  workflow_dispatch:
+  push:
+    tags: ["v*"]
 
 jobs:
   publish:
     name: Publish new Version
-    # needs:
-    #   - update-files
-    #   - check-versions
     runs-on: windows-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Package
-        run: choco pack
+      - run: choco pack
+        name: Package
 
-      # - name: Create Release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     body: Automatic Release from Github Actions for Gleam Release ${{ needs.check-versions.outputs.gleam-version }}
-      #     tag_name: v${{ needs.check-versions.outputs.gleam-version }}
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     files: gleam.${{ needs.check-versions.outputs.gleam-version }}.nupkg
+      - uses: softprops/action-gh-release@v1
+        name: Release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: gleam.${{ github.ref_name }}.nupkg
 
       - run: choco apikey --key ${{ secrets.CHOCO_KEY }} --source https://push.chocolatey.org/
-        name: Login to Chocolatey
+        name: Login
 
       - run: choco push --yes
-        name: Publish to Chocolatey
+        name: Push
