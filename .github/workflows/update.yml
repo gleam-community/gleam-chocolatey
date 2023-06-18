@@ -28,5 +28,5 @@ jobs:
       - run: choco apikey --key ${{ secrets.CHOCO_KEY }} --source https://push.chocolatey.org/
         name: Login
 
-      - run: choco push --yes
+      - run: choco push --yes --source https://push.chocolatey.org/
         name: Push
