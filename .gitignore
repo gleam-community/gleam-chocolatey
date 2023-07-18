@@ -1,1 +1,8 @@
-*.nupkg
+.DS_Store
+.env*
+.idea/
+.nova/
+.vscode/
+build/
+coverage/
+*.log
