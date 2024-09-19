@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"; # stop on all errors
-$url64    = "https://github.com/gleam-lang/gleam/releases/download/v1.4.1/gleam-v1.4.1-x86_64-pc-windows-msvc.zip"
-# Taken from https://github.com/gleam-lang/gleam/releases/download/v1.4.1/gleam-v1.4.1-x86_64-pc-windows-msvc.zip.sha512
-$checksum = "469a355f65e2e9e401c249af9a97400404f76c350d6db13db9dcd4f083153b52c2db53559c757404218d0f6edb6d612fd626a9b57b439933d3dbe0a8fc792a84"
+$url64    = "https://github.com/gleam-lang/gleam/releases/download/v1.5.0/gleam-v1.5.0-x86_64-pc-windows-msvc.zip"
+# Taken from https://github.com/gleam-lang/gleam/releases/download/v1.5.0/gleam-v1.5.0-x86_64-pc-windows-msvc.zip.sha512
+$checksum = "c79b976e9686a0d98274d7e5731c14b207bb87d627774f7cae77a48ec080cc9f7179f5c5e1a6ef16f0e3cc8382d524fd44de3541ee7b27f561c9f35b4a3a05dd"
 
 Install-ChocolateyZipPackage `
   -PackageName "Gleam" `
