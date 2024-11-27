@@ -1,25 +1,21 @@
-# Runs on a schedule to check if the latest Gleam release is newer than the
-# latest Chocolatey release. If it is, it will run the update script to update
-# the Chocolatey package.
-
-name: Automatic Release
+name: update
 on:
   push:
     tags: ["v*"]
 
 jobs:
-  publish:
+  update:
     name: Publish new Version
     runs-on: windows-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        name: Checkout
 
       - run: choco pack
         name: Package
 
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v2
         name: Release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
