@@ -3,6 +3,4 @@
 .idea/
 .nova/
 .vscode/
-build/
-coverage/
 *.log
